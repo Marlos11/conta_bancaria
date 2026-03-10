@@ -9,6 +9,12 @@ export function main() {
   conta.visualizar();
   conta.depositar(5000);
   conta.visualizar();
+  const conta2: Conta = new Conta(2, 1245, 2, "Carlos", 20000);
+  conta2.visualizar();
+  conta2.sacar(10500);
+  conta2.visualizar();
+  conta2.depositar(5000);
+  conta2.visualizar();
 
   while (true) {
 
