@@ -1,5 +1,7 @@
 import readlineSync from "readline-sync"
 import { Conta } from "./src/Model/Conta"
+import { ContaCorrente } from "./src/Model/ContaCorrente";
+import { ContaPoupanca } from "./src/Model/ContaPoupanca";
 export function main() {
   let opcao: number
 
@@ -9,13 +11,20 @@ export function main() {
   conta.visualizar();
   conta.depositar(5000);
   conta.visualizar();
-  const conta2: Conta = new Conta(2, 1245, 2, "Carlos", 20000);
-  conta2.visualizar();
-  conta2.sacar(10500);
-  conta2.visualizar();
-  conta2.depositar(5000);
-  conta2.visualizar();
 
+  const contacorrente: ContaCorrente = new ContaCorrente(2, 123, 1, "Mariana", 15000, 1000);
+  contacorrente.visualizar();
+  contacorrente.sacar(2000);
+  contacorrente.visualizar();
+  contacorrente.depositar(1000);
+  contacorrente.visualizar();
+
+  const contapoupanca: ContaPoupanca = new ContaPoupanca(3, 123, 2, "Victor", 1000, 10);
+  contapoupanca.visualizar();
+  contapoupanca.sacar(200);
+  contapoupanca.visualizar();
+  contapoupanca.depositar(1000);
+  contapoupanca.visualizar();
   while (true) {
 
     console.log("****************************************************************************")
