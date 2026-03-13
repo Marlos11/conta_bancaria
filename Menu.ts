@@ -2,25 +2,34 @@ import readlineSync from "readline-sync"
 import { Conta } from "./src/Model/Conta"
 import { ContaCorrente } from "./src/Model/ContaCorrente";
 import { ContaPoupanca } from "./src/Model/ContaPoupanca";
+import { ContaController } from "./src/controller/ContaController";
 export function main() {
-  let opcao: number
+
+  //Instâcia da classe contaController
+  let contas: ContaController = new ContaController();
+  //Variáveis Auxiliares
+  let opcao, numero, agencia, tipo, saldo, limite, aniversario: number;
+  let titular: string;
+  const tiposContas = ["Conta Corrente", "Conta Poupanca"]
 
 
 
 
-  const contacorrente: ContaCorrente = new ContaCorrente(2, 123, 1, "Mariana", 15000, 1000);
-  contacorrente.visualizar();
-  contacorrente.sacar(2000);
-  contacorrente.visualizar();
-  contacorrente.depositar(1000);
-  contacorrente.visualizar();
+  console.log("\nCriar Contas\n");
 
-  const contapoupanca: ContaPoupanca = new ContaPoupanca(3, 123, 2, "Victor", 1000, 10);
-  contapoupanca.visualizar();
-  contapoupanca.sacar(200);
-  contapoupanca.visualizar();
-  contapoupanca.depositar(1000);
-  contapoupanca.visualizar();
+  let cc1: ContaCorrente = new ContaCorrente(contas.gerarNumero(), 123, 1, "João da Silva", 1000, 100.0);
+  contas.cadastrar(cc1);
+
+  let cc2: ContaCorrente = new ContaCorrente(contas.gerarNumero(), 124, 1, "Maria da Silva", 2000, 100.0);
+  contas.cadastrar(cc2);
+
+  let cp1: ContaPoupanca = new ContaPoupanca(contas.gerarNumero(), 125, 2, "Mariana dos Santos", 4000, 12);
+  contas.cadastrar(cp1);
+
+  let cp2: ContaPoupanca = new ContaPoupanca(contas.gerarNumero(), 125, 2, "Juliana Ramos", 8000, 15);
+  contas.cadastrar(cp2);
+
+  contas.listarTodas();
   while (true) {
 
     console.log("****************************************************************************")
@@ -52,32 +61,59 @@ export function main() {
     }
     switch (opcao) {
       case 1:
-        console.log("\n\nCriar conta\n\n")
-        break
+        console.log("\n\nCriar conta\n\n");
+
+        console.log("Digite o Número da agência: ");
+        agencia = readlineSync.questionInt("");
+
+        console.log("Digite o nomedo do titular da conta: ");
+        titular = readlineSync.question("");
+
+        console.log("\nDigite o tipo da Conta: ")
+        tipo = readlineSync.keyInSelect(tiposContas, "", { cancel: false }) + 1;
+
+        console.log("\nDigite o Saldo da conta(R$): ");
+        saldo = readlineSync.questionFloat("");
+
+        switch (tipo) {
+          case 1:
+            console.log("Digite o limite da conta (R$): ");
+            limite = readlineSync.questionFloat("");
+            contas.cadastrar(
+              new ContaCorrente(contas.gerarNumero(), agencia, tipo, titular, saldo, limite));
+            break;
+          case 2:
+            console.log("Digite o dia do aniversário da Conta poupança: ");
+            aniversario = readlineSync.questionInt("");
+            contas.cadastrar(new ContaPoupanca(contas.gerarNumero(), agencia, tipo, titular, saldo, aniversario));
+            break;
+        }
+        break;
       case 2:
-        console.log("\n\nListar todas as Contas\n\n")
-        break
+        console.log("\n\nListar todas as Contas\n\n");
+        contas.listarTodas();
+        break;
       case 3:
-        console.log("\n\nConsultar dados da Conta - por Número\n\n")
-        break
+        console.log("\n\nConsultar dados da Conta - por Número\n\n");
+        break;
       case 4:
-        console.log("\n\nAtualizar dados da Conta\n\n")
-        break
+        console.log("\n\nAtualizar dados da Conta\n\n");
+        break;
       case 5:
-        console.log("\n\nApagar uma Conta\n\n")
-        break
+        console.log("\n\nApagar uma Conta\n\n");
+        break;
       case 6:
-        console.log("\n\nSaque")
-        break
+        console.log("\n\nSaque");
+        break;
       case 7:
-        console.log("\n\nDepósito\n\n")
-        break
+        console.log("\n\nDepósito\n\n");
+        break;
       case 8:
-        console.log("\n\nTransferência entre contas\n\n")
-        break
+        console.log("\n\nTransferência entre contas\n\n");
+        break;
       default:
-        console.log("\nOpção Inválida\n")
-        break
+        console.log("\nOpção Inválida\n");
+        break;
     }
   }
 }
