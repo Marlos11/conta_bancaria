@@ -8,7 +8,7 @@ export function main() {
   //Instâcia da classe contaController
   let contas: ContaController = new ContaController();
   //Variáveis Auxiliares
-  let opcao, numero, agencia, tipo, saldo, limite, aniversario: number;
+  let opcao, numero, agencia, tipo, saldo, limite, aniversario, valor, numeroDestino: number;
   let titular: string;
   const tiposContas = ["Conta Corrente", "Conta Poupanca"]
 
@@ -92,6 +92,7 @@ export function main() {
       case 2:
         console.log("\n\nListar todas as Contas\n\n");
         contas.listarTodas();
+
         break;
       case 3:
         console.log("\n\nConsultar dados da Conta - por Número\n\n");
@@ -151,12 +152,34 @@ export function main() {
         break;
       case 6:
         console.log("\n\nSaque");
+
+        console.log("Digite o número da conta: ")
+        numero = readlineSync.questionInt("");
+
+        console.log("\nDigite o valor do saque (R$):");
+        valor = readlineSync.questionFloat("");
         break;
       case 7:
         console.log("\n\nDepósito\n\n");
+        console.log("Digite o numero da conta: ");
+        numero = readlineSync.questionInt("");
+        console.log("\nDigite o valor do depósito (R$):");
+        valor = readlineSync.questionFloat("");
+        contas.depositar(numero, valor);
         break;
       case 8:
         console.log("\n\nTransferência entre contas\n\n");
+
+        console.log("Digite o número da conta origem: ");
+        numero = readlineSync.questionInt("");
+
+        console.log("Digite o número da conta destino: ");
+        numeroDestino = readlineSync.questionInt("");
+
+        console.log("\nDigite o valor do deposito(R$): ");
+        valor = readlineSync.questionFloat("");
+
+        contas.transferir(numero, numeroDestino, valor);
         break;
       default:
         console.log("\nOpção Inválida\n");
