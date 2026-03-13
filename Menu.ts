@@ -95,12 +95,59 @@ export function main() {
         break;
       case 3:
         console.log("\n\nConsultar dados da Conta - por Número\n\n");
+        console.log("Digite o número da conta: ");
+        numero = readlineSync.questionInt("");
+        contas.procurarPorNumero(numero);
         break;
       case 4:
         console.log("\n\nAtualizar dados da Conta\n\n");
+        console.log("Digite o número da Conta: ");
+        numero = readlineSync.questionInt("");
+
+        let conta = contas.buscarNoArray(numero);
+
+        if (conta != null) {
+
+          console.log("Digite o Número da agência: ");
+          agencia = readlineSync.questionInt("");
+
+          console.log("Digite o Nome do Titular da conta: ");
+          titular = readlineSync.question("");
+
+          tipo = conta.tipo;
+
+          console.log("\nDigite o Saldo da conta (R$): ");
+          saldo = readlineSync.questionFloat("");
+
+          switch (tipo) {
+            case 1:
+              console.log("Digite o Limite da Conta (R$): ");
+              limite = readlineSync.questionFloat("");
+              contas.atualizar(
+                new ContaCorrente(numero, agencia, tipo, titular, saldo, limite));
+              break;
+            case 2:
+              console.log("Digite o Dia do aniversário da Conta Poupança: ");
+              aniversario = readlineSync.questionInt("");
+              contas.atualizar(new ContaPoupanca(numero, agencia, tipo, titular, saldo,
+                aniversario));
+              break;
+          }
+
+        } else {
+          console.log("\nA Conta numero: " + numero +
+            " não foi encontrada!",);
+        }
+
+
+
         break;
       case 5:
         console.log("\n\nApagar uma Conta\n\n");
+        console.log("digite o núnero da conta: ");
+        numero = readlineSync.questionInt("");
+        contas.deletar(numero);
+
         break;
       case 6:
         console.log("\n\nSaque");
